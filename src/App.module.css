@@ -40,3 +40,46 @@ i:hover {
   transition: color ease-in-out 0.3s;
   color: #857739;
 }
+
+.Content {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 2px;
+  border: 1px solid #dadadf;
+}
+
+.FillerImage {
+  border-radius: 20px;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.Image {
+  max-height: 40vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+figure {
+  text-align: center;
+  display: inline-block;
+}
+
+/* scrollbar */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+*::-webkit-scrollbar-thumb {
+  background: #888;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
