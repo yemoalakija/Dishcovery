@@ -1,0 +1,42 @@
+.App {
+  background-image: url("https://transparenttextures.com/patterns/food.png");
+  background-color: #282c34;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.Main {
+  padding-top: 80px;
+  color: #838383;
+}
+
+a {
+  color: #555555;
+  transition: color ease-in-out 0.3s;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:hover i {
+  color: #857739;
+  transition: color ease-in-out 0.3s;
+}
+
+i {
+  color: #838383;
+  font-size: 1.6rem;
+  padding: 7px;
+  vertical-align: middle;
+}
+
+i:hover {
+  cursor: pointer;
+  transition: color ease-in-out 0.3s;
+  color: #857739;
+}
