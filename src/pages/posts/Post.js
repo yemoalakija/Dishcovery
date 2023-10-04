@@ -120,7 +120,7 @@ const Post = (props) => {
           ) : (
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip>Log in to like posts!</Tooltip>}
+              overlay={<Tooltip>Please log in to like posts!</Tooltip>}
             >
               <i className="far fa-heart" />
             </OverlayTrigger>

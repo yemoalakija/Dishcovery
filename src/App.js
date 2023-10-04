@@ -28,19 +28,29 @@ function App() {
           <Route
             exact
             path="/"
-            element={<PostsPage message="No results found. Adjust the search keyword." />}
+            element={
+              <PostsPage message="Sorry, no results were found. Please adjust your search keyword." />
+            }
           />
           <Route
             exact
             path="/feed"
-            element={<PostsPage message="No results found. Adjust the search keyword or follow a user."
-                filter={`owner__followed__owner__profile=${profile_id}&`} />}
+            element={
+              <PostsPage
+                message="Apologies, no results found. Please adjust your search keyword or follow a user."
+                filter={`owner__followed__owner__profile=${profile_id}&`}
+              />
+            }
           />
           <Route
             exact
             path="/liked"
-            element={<PostsPage message="No results found. Adjust the search keyword or like a post."
-                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`} />}
+            element={
+              <PostsPage
+                message="Sorry, no results were found. Please adjust your search keyword or like a post."
+                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
+              />
+            }
           />
           <Route exact path="/signin" element={<SignInForm />} />
           <Route exact path="/signup" element={<SignUpForm />} />
