@@ -1,50 +1,73 @@
-// Desc: Main App component
-import React from "react";
 import styles from "./App.module.css";
 import NavBar from "./components/NavBar";
 import Container from "react-bootstrap/Container";
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./api/axiosDefaults";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
-import { createContext, useEffect, useState } from "react";
-import axios from "axios";
-
-export const CurrentUserContext = createContext();
-export const SetCurrentUserContext = createContext();
+import PostCreateForm from "./pages/posts/PostCreateForm";
+import PostPage from "./pages/posts/PostPage";
+import PostsPage from "./pages/posts/PostsPage";
+import { useCurrentUser } from "./contexts/CurrentUserContext";
+import PostEditForm from "./pages/posts/PostEditForm";
+import ProfilePage from "./pages/profiles/ProfilePage";
+import UsernameForm from "./pages/profiles/UsernameForm";
+import UserPasswordForm from "./pages/profiles/UserPasswordForm";
+import ProfileEditForm from "./pages/profiles/ProfileEditForm";
+import NotFound from "./components/NotFound";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-
-  const handleMount = async () => {
-    try {
-      const {data} = await axios.get("dj-rest-auth/user/");
-      setCurrentUser(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    handleMount();
-  }, []);
+  const currentUser = useCurrentUser();
+  const profile_id = currentUser?.profile_id || "";
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <SetCurrentUserContext.Provider value={setCurrentUser}>
-        <div className={styles.App}>
-          <NavBar />
-          <Container className={styles.Main}>
-            <Routes>
-              <Route path="/" element={<h1>Home Page Hello, world!</h1>} />
-              <Route path="/signin" element={<SignInForm />} />
-              <Route path="/signup" element={<SignUpForm />} />
-              <Route path="*" element={<h3>Page Not Found!</h3>} />
-            </Routes>
-          </Container>
-        </div>
-      </SetCurrentUserContext.Provider>
-    </CurrentUserContext.Provider>
+    <div className={styles.App}>
+      <NavBar />
+      <Container className={styles.Main}>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={<PostsPage message="No results found. Adjust the search keyword." />}
+          />
+          <Route
+            exact
+            path="/feed"
+            element={<PostsPage message="No results found. Adjust the search keyword or follow a user."
+                filter={`owner__followed__owner__profile=${profile_id}&`} />}
+          />
+          <Route
+            exact
+            path="/liked"
+            element={<PostsPage message="No results found. Adjust the search keyword or like a post."
+                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`} />}
+          />
+          <Route exact path="/signin" element={<SignInForm />} />
+          <Route exact path="/signup" element={<SignUpForm />} />
+          <Route exact path="/posts/create" element={<PostCreateForm />} />
+          <Route exact path="/posts/:id" element={<PostPage />} />
+          <Route exact path="/posts/:id/edit" element={<PostEditForm />} />
+          <Route exact path="/profiles/:id" element={<ProfilePage />} />
+          <Route
+            exact
+            path="/profiles/:id/edit/username"
+            element={<UsernameForm />}
+          />
+          <Route
+            exact
+            path="/profiles/:id/edit/password"
+            element={<UserPasswordForm />}
+          />
+          <Route
+            exact
+            path="/profiles/:id/edit"
+            element={<ProfileEditForm />}
+          />
+
+          <Route element={<NotFound />} />
+        </Routes>
+      </Container>
+    </div>
   );
 }
 

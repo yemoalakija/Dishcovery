@@ -5,14 +5,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { axiosRes } from "../../api/axiosDefaults";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
 const UserPasswordForm = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams();
   const currentUser = useCurrentUser();
 
@@ -34,15 +34,15 @@ const UserPasswordForm = () => {
   useEffect(() => {
     if (currentUser?.profile_id?.toString() !== id) {
       // redirect user if they are not the owner of this profile
-      history.push("/");
+      navigate.push("/");
     }
-  }, [currentUser, history, id]);
+  }, [currentUser, navigate, id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await axiosRes.post("/dj-rest-auth/password/change/", userData);
-      history.goBack();
+      navigate.goBack();
     } catch (err) {
       // console.log(err);
       setErrors(err.response?.data);
@@ -86,7 +86,7 @@ const UserPasswordForm = () => {
             ))}
             <Button
               className={`${btnStyles.Button} ${btnStyles.Blue}`}
-              onClick={() => history.goBack()}
+              onClick={() => navigate.goBack()}
             >
               cancel
             </Button>
