@@ -3,10 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
-import { Form, Button, Image, Col, Row, Container, Alert, } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 import axios from "axios";
+import { useRedirect } from "../../hooks/useRedirect";
 
 const SignUpForm = () => {
+  useRedirect("loggedIn");
   const [signUpData, setSignUpData] = useState({
     username: "",
     password1: "",
@@ -28,12 +36,8 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "/dj-rest-auth/registration/",
-        signUpData
-      );
-      // Redirect tot he sign in page on successful sign up
-      navigate("/signin");
+      await axios.post("/dj-rest-auth/registration/", signUpData);
+      navigate.push("/signin");
     } catch (err) {
       setErrors(err.response?.data);
     }
@@ -53,17 +57,15 @@ const SignUpForm = () => {
                 type="text"
                 placeholder="Username"
                 name="username"
-                value={username || ""}
+                value={username}
                 onChange={handleChange}
               />
             </Form.Group>
-            {errors &&
-              errors.username &&
-              errors.username.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
-                  {message}
-                </Alert>
-              ))}
+            {errors.username?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
 
             <Form.Group controlId="password1">
               <Form.Label className="d-none">Password</Form.Label>
@@ -72,17 +74,15 @@ const SignUpForm = () => {
                 type="password"
                 placeholder="Password"
                 name="password1"
-                value={password1 || ""}
+                value={password1}
                 onChange={handleChange}
               />
             </Form.Group>
-            {errors &&
-              errors.password1 &&
-              errors.password1.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
+            {errors.password1?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
 
             <Form.Group controlId="password2">
               <Form.Label className="d-none">Confirm password</Form.Label>
@@ -91,17 +91,15 @@ const SignUpForm = () => {
                 type="password"
                 placeholder="Confirm password"
                 name="password2"
-                value={password2 || ""}
+                value={password2}
                 onChange={handleChange}
               />
             </Form.Group>
-            {errors &&
-              errors.password2 &&
-              errors.password2.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
+            {errors.password2?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
 
             <Button
               className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
@@ -109,13 +107,11 @@ const SignUpForm = () => {
             >
               Sign up
             </Button>
-            {errors &&
-              errors.non_field_errors &&
-              errors.non_field_errors.map((message, idx) => (
-                <Alert key={idx} variant="warning" className="mt-3">
-                  {message}
-                </Alert>
-              ))}
+            {errors.non_field_errors?.map((message, idx) => (
+              <Alert key={idx} variant="warning" className="mt-3">
+                {message}
+              </Alert>
+            ))}
           </Form>
         </Container>
 

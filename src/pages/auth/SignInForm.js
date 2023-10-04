@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -11,10 +11,13 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
-import { SetCurrentUserContext } from "../../App";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { useRedirect } from "../../hooks/useRedirect";
+import { setTokenTimestamp } from "../../utils/utils";
 
 function SignInForm() {
-    const setCurrentUser = useContext(SetCurrentUserContext);
+  const setCurrentUser = useSetCurrentUser();
+  useRedirect("loggedIn");
 
   const [signInData, setSignInData] = useState({
     username: "",
@@ -27,12 +30,14 @@ function SignInForm() {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-        const {data } = await axios.post("/dj-rest-auth/login/", signInData);
-        setCurrentUser(data.user);
-        navigate("/");
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
+      setCurrentUser(data.user);
+      setTokenTimestamp(data);
+      navigate.goBack();
     } catch (err) {
-        setErrors(err.response?.data);
+      setErrors(err.response?.data);
     }
   };
 
@@ -97,7 +102,8 @@ function SignInForm() {
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>
           <Link className={styles.Link} to="/signup">
-            Join us, food lover! <span>Sign up</span> and begin your culinary adventure.
+            Join us, food lover! <span>Sign up</span> and begin your culinary
+            adventure.
           </Link>
         </Container>
       </Col>
