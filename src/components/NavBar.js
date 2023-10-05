@@ -104,7 +104,7 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto text-left">
             <NavLink
-              exact
+              exact="true"
               className={styles.NavLink}
               activeClassName={styles.Active}
               to="/"

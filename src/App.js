@@ -26,14 +26,14 @@ function App() {
       <Container className={styles.Main}>
         <Routes>
           <Route
-            exact
+            exact="true"
             path="/"
             element={
               <PostsPage message="Sorry, no results were found. Please adjust your search keyword." />
             }
           />
           <Route
-            exact
+            exact="true"
             path="/feed"
             element={
               <PostsPage
@@ -43,7 +43,7 @@ function App() {
             }
           />
           <Route
-            exact
+            exact="true"
             path="/liked"
             element={
               <PostsPage
@@ -52,24 +52,24 @@ function App() {
               />
             }
           />
-          <Route exact path="/signin" element={<SignInForm />} />
-          <Route exact path="/signup" element={<SignUpForm />} />
-          <Route exact path="/posts/create" element={<PostCreateForm />} />
-          <Route exact path="/posts/:id" element={<PostPage />} />
-          <Route exact path="/posts/:id/edit" element={<PostEditForm />} />
-          <Route exact path="/profiles/:id" element={<ProfilePage />} />
+          <Route exact="true" path="/signin" element={<SignInForm />} />
+          <Route exact="true" path="/signup" element={<SignUpForm />} />
+          <Route exact="true" path="/posts/create" element={<PostCreateForm />} />
+          <Route exact="true" path="/posts/:id" element={<PostPage />} />
+          <Route exact="true" path="/posts/:id/edit" element={<PostEditForm />} />
+          <Route exact="true" path="/profiles/:id" element={<ProfilePage />} />
           <Route
-            exact
+            exact="true"
             path="/profiles/:id/edit/username"
             element={<UsernameForm />}
           />
           <Route
-            exact
+            exact="true"
             path="/profiles/:id/edit/password"
             element={<UserPasswordForm />}
           />
           <Route
-            exact
+            exact="true"
             path="/profiles/:id/edit"
             element={<ProfileEditForm />}
           />
