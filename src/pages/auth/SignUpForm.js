@@ -57,7 +57,7 @@ const SignUpForm = () => {
                 type="text"
                 placeholder="Username"
                 name="username"
-                value={username}
+                value={username || ""} // Add a default value if username is undefined
                 onChange={handleChange}
               />
             </Form.Group>
@@ -113,6 +113,7 @@ const SignUpForm = () => {
               </Alert>
             ))}
           </Form>
+          {/* ... other form groups and error handling */}
         </Container>
 
         <Container className={`mt-3 ${appStyles.Content}`}>

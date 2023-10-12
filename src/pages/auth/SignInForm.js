@@ -62,7 +62,7 @@ function SignInForm() {
                 placeholder="Username"
                 name="username"
                 className={styles.Input}
-                value={username}
+                value={username || ""}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -79,7 +79,7 @@ function SignInForm() {
                 placeholder="Password"
                 name="password"
                 className={styles.Input}
-                value={password}
+                value={password || ""}
                 onChange={handleChange}
               />
             </Form.Group>
